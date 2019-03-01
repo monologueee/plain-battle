@@ -140,9 +140,6 @@
         var timeID6 = null;
         //将实例化出来的玩家用全局变量存放
         var player = null;                                                        
-  
-        // document.getElementById('backgroundmisuid').play();                       //这种方法不行 谷歌浏览器现在不允许自动播放音频视频
-        // document.getElementById('baozha').play(); 
         /**Smallfish               敌机的构造函数
         *  @para     x             敌机的横向坐标                                    
         *  @para     y             敌机的纵向坐标
@@ -159,7 +156,6 @@
             this.imgNode = document.createElement('img');      //创造一个图片元素用来引入敌机图片
             this.src = imgsrc;        //敌机图片的路径
         }
-        
         //将实例敌机的函数加到构造函数的原型上面
          /**rander                     敌机的实例化函数
         *  @para     width              敌机的横向坐标                                    
@@ -183,7 +179,6 @@
                 var imgNodetop = parseInt(this.imgNode.style.top);     //对其取出来的数值进行取整去掉其单位
                 this.imgNode.style.top = imgNodetop + this.speed + 'px';
             }
-
        /**moveFish    敌机的移动函数
        *  num         某种类型的敌机的数组
        */
@@ -291,60 +286,6 @@
         }
 
   
-
-    // 给页面注册键盘按键按下事件
-    /*处理思路:
-           因为在键盘按键里面直接执行玩家移动函数,系统会有一个延迟事件,为了去掉这个延迟时间将玩家移动函数放在键盘按键事件外执行
-           事件里面仅仅只做判断是否移玩家
-    */
-    // 注册键盘按键按下事件,当相关的按键按下去的时候立马更改玩家的相应方向的移动状态维true
-    document.body.onkeydown = function(e){//键盘按键按下事件,控制玩家的走位
-            
-       switch(e.keyCode){//这种在键盘事件里面让系统来执行这个玩家移动的这个函数会有卡顿感,因为系统存在延迟
-        case 40:
-        player.playerdown = true;//设置开关状态来监控此时的按键的状态
-            // player.downmove();
-            break;
-        case 37:
-        player.playerleft = true;
-            // player.leftmove();
-            break;
-         case 38:
-         player.playertop = true;
-            // player.topmove();
-            break;
-        case 39:
-        player.playerright = true;
-            // player.rightmove();
-            break;
-        case 83:
-            player.shoot();
-            document.getElementById('zizisheng').play();
-            break;
-       }
-    
-    }
-
-     // 注册键盘按键抬起事件,当相关的按键抬起的时候立马更改玩家的相应方向的移动状态为false
-    document.body.onkeyup = function(e){
-        // console.log(e);
-            
-       switch(e.keyCode){//这种在键盘事件里面让系统来执行这个玩家移动的这个函数会有卡顿感,因为系统存在延迟
-        case 40:
-        player.playerdown = false;//设置开关状态来监控此时的按键的状态
-            break;
-        case 37:
-        player.playerleft = false;
-            break;
-         case 38:
-         player.playertop = false;
-            break;
-        case 39:
-        player.playerright = false;
-            break;
-       }
-    }
-
     //单独设置函数来执行玩家的移动控制以此来抵消键盘按键事件的卡顿
     function moves(){
         if( player.playerleft){
@@ -360,9 +301,6 @@
             player.downmove();
         }
     }
-
-  
-
 
     //创建子弹
     /*   Bullet           //创建子弹的构造函数    
@@ -408,8 +346,6 @@
                 }
         }
     }
-
-    //设置定时器通过定时器实现其子弹的连续的移动
    
     /**bulpen        //子弹和敌机的碰撞函数
     /* @numa           敌机的数组
@@ -446,9 +382,6 @@
          }
     }
 
-   
-  
-    
     //玩家血量的减少
     //如果敌机和玩家相撞了,那么玩家的血量就相应应的减少
     function playpen(num){
@@ -496,9 +429,6 @@
             }
         }
     }
-
-    
-   
     //游戏开始的按钮的处理
     start.onclick = function(){
         // 首先将开始按钮清除
@@ -515,7 +445,6 @@
                 smallyu.rander(60,40,180); //将实例化出来的敌机渲染到页面中间去
                 numPlane.push(smallyu); //将每一架渲染出来的敌机依次添加到数组中去,方便后面的查找
         },2000);
-        
          // 设置定时器将第二种敌机实例化出来
        timeIDb = setInterval(function(){
                 var plsyx = Math.floor(Math.random()*750); //实例化出来的敌机纵向坐标随机;
@@ -524,12 +453,10 @@
                 smallyu.rander(45,200,180); //将实例化出来的敌机渲染到页面中间去
                 numPlane.push(smallyu); //将每一架渲染出来的敌机依次添加到数组中去,方便后面的查找
         },3000);
-
          //设置定时器连续移动每一架敌机
        timeID2 = setInterval(function(){
          moveFish(numPlane);
        },50);
-
     //实例化出来一个玩家
     player = new Player(300,600,'./images/dijie.png',10);   
     player.init();                                              //将实例化出来的玩家添加到页面中间去
@@ -537,22 +464,18 @@
    console.log(playblood.children[0]);
     //设置定时器来实时的监听玩家是否移动
     timeID3 = setInterval(moves,20);//通过定时器缩短函数的执行性事件,使玩家移动起来看起来很流畅
-
     //设置定时器来连续移动每一颗子弹
     timeID4 = setInterval(function(){
         bulletMove(numbullet);
     },20);
-
    //设置定时器来实时的检测图片与子弹是否碰撞       （这样会存在问题，因为定时是间隔一段时间执行一次，所以可能会在这段间隔的时间里面子弹与敌机发生了碰撞而没有被检测到）
    timeID5 = setInterval(function(){
         bulpen(numPlane, numbullet);
     },50);
-
    //设置定时器在定时器里面利用定时器检测是否有敌机与玩家的飞机相撞  （这里也会存在与上面子相同的问题）
     timeID6 = setInterval(function(){
         playpen(numPlane);
     },20);
-    
     document.body.onkeydown = function(e){//键盘按键按下事件,控制玩家的走位
             
        switch(e.keyCode){//这种在键盘事件里面让系统来执行这个玩家移动的这个函数会有卡顿感,因为系统存在延迟
@@ -599,10 +522,7 @@
             break;
        }
     }
-
-
     }
-
     // 再来一次的按钮的处理
     document.getElementsByClassName('againgo')[0].onclick = function(){
         location.reload();   
